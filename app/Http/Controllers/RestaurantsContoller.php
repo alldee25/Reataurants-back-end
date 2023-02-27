@@ -58,6 +58,7 @@ class RestaurantsContoller extends Controller
                 'address' => $result->formatted_address,
                 'photoReference' => $photo_reference,
                 'placeId' => $result->place_id,
+                'tel' => isset($result->formatted_phone_number) ? $result->formatted_phone_number : ""
             );
             array_push($restaurants, $restaurant);
         }
@@ -66,7 +67,7 @@ class RestaurantsContoller extends Controller
         Cache::put($cache_key, $restaurants, now()->addHours(1));
 
         // Return restaurant data as JSON response
-        return response()->json(['result' => $restaurants, 'code' => 200]);
+        return response()->json(['result' => $results, 'code' => 200]);
     }
     public function Search(Request $request)
     {
